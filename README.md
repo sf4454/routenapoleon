@@ -17,4 +17,4 @@ Font Awesome 6.5.0
 
 Tile layers from OpenStreetMap and Esri
 
-more informational reading available [here](https://www.bbc.com/travel/article/20220120-napoleons-gravity-defying-325km-road)
+ More information available [here](https://www.bbc.com/travel/article/20220120-napoleons-gravity-defying-325km-road)
