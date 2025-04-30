@@ -1,1 +1,1 @@
-# routenapoleon
+This map showcases the Route Napoleon, a 325km scenic road throughout the South of France commerating Napoleon's return from exlie on the Isle of Elba. The map shows scenic locations along the route with important historical context for each description. This map features tourist-style information popups, coustom icons, toggleable basemap layers sourced from leaflet, a legend and north arrow. The icons were sourced from fontawesome.com.
