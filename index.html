@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Route Napoléon</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+
+    #info-box {
+      position: absolute;
+      top: 100px;
+      left: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 250px;
+      z-index: 500;
+      font-family: sans-serif;
+    }
+
+    #info-box h2 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+    }
+
+    #info-box p {
+      font-size: 1em;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .north-arrow {
+      position: absolute;
+      top: 800px;
+      right: 10px;
+      text-align: center;
+      font-family: sans-serif;
+      z-index: 1000;
+    }
+
+    .north-arrow .arrow {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid black;
+      margin: 0 auto;
+    }
+
+    .north-arrow .label {
+      font-weight: bold;
+      margin-top: 2px;
+      font-size: 14px;
+    }
+
+    .legend {
+      position: absolute;
+      bottom: 50px;
+      right: 0px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: sans-serif;
+      font-size: 14px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+      width: 220px;
+    }
+
+    .legend i {
+      margin-right: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <div id="info-box">
+    <h2>The Route Napoléon</h2>
+    <p>
+      The Route Napoleon is one of the most famous driving roads in the south of France. Starting in Cannes and ending in Grenoble, this 325km stretch of road runs through the western foothills of the French Alps. The route passes through some of the most beautiful scenery in the region and the open road sweeping through the peaceful landscapes makes this the perfect road trip through southern France. The road bares the name of Napoleon Bonaparte, and follows a nearly identical route to the one he took after his escape from exile on the island of Elba.
+    </p>
+    <p><a href=https://www.bbc.com/travel/article/20220120-napoleons-gravity-defying-325km-road>Further information available here</a></p>
+  </div>
+
+  <div class="north-arrow">
+    <div class="arrow"></div>
+    <div class="label">N</div>
+    <div class="legend">
+      <i class="fas fa-flag" style="color: #0033cc;"></i> Desirable Attractions<br>
+      <svg width="12" height="12" style="vertical-align: middle;"><line x1="0" y1="6" x2="12" y2="6" style="stroke:#000000;stroke-width:3" /></svg> Route Napoléon
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="route.js"></script>
+
+  <script>
+    const map = L.map('map', {
+      preferCanvas: true
+    }).setView([44.3, 6.2], 8);
+
+    const defaultLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    });
+
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a>'
+    });
+
+    const terrainLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, USGS'
+    });
+
+    defaultLayer.addTo(map);
+    L.control.scale().addTo(map);
+
+    const geojsonData = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Castellane",
+        "desc": "Castellane is a small village located in the westernmost portion of the French Alps. Castellane has a warm, Mediterranean climate in the summer, with cold snowy winters. This is one of the oldest surviving towns in the surrounding area, dating back to the 9th century.\n\nOn March 3rd, 1815, Napoleon was welcomed by the city and took quarters at Chapelle Notre-Dame-du-Roc, on the mountain overlooking the city."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.512662, 43.849124]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Digne-les-Bains",
+        "desc": "Digne-les-Bains is one of the smallest prefectures in France, with a population of just 17,400. At 608 meters above sea level, it is home to some of the more rugged terrain of the south of France. The town center is entirely enclosed in the Bléone Valley, making it particularly susceptible to early morning fog. With some of the nearest mountains reaching peaks of over 1500 meters, the views are particularly stunning.\n\nNapoleon stopped here in mid-March to rally support for his campaign to retake control of France."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.2315062, 44.09108]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sisteron",
+        "desc": "Sisteron is an ancient city with some historians dating human civilization in the area to around 2000 BCE. Sisteron is home to Sisteron Cathedral and is considered one of the most desirable locations for rock climbing on the continent.\n\nNapoleon was granted passage through the city, and the citadel overlooking the city was stripped of all ammunition upon the local government and military learning of his arrival."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.943191, 44.194713]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Corps",
+        "desc": "Corps is a very small village, sitting at about 973 meters above sea level west of the French Alps. Corps is home to under 1000 residents and the Marian Sanctuary of La Salette."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.941051, 44.8178539]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Grasse",
+        "desc": "Grasse is a small town situated at the foothills of the French Alps. Sitting at an elevation of about 320 meters above sea level, it is a tourist destination in both summer and winter months. Grasse is also the world leader in the production of natural fragrances. Though international corporations control the perfume industry, it still dominates the local economy.\n\nJust two days after he landed in Cannes, Napoleon and his men camped on Rocquevignon Plateau, just north of Grasse."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.9269, 43.6618]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cannes",
+        "desc": "Cannes is a resort town, just southwest of Monaco. For the majority of its history, Cannes has been a quiet fishing village in the south of France, but it has recently been developed into one of the most popular tourist destinations along the French Riviera. Cannes is also known for its international market of flowers, particularly mimosa, which has flourished in the region since the mid-19th century.\n\nAfter Napoleon escaped exile with a contingent of about one thousand soldiers in 1815, he briefly rested in Cannes. This was his first stop on his route to regain control of France. Additionally, he also wrote Le Souper de Beaucaire here in 1793 shortly before the Siege of Toulon."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.0108, 43.5511]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Saint-Vallier-de-Thiey",
+        "desc": "Saint-Vallier-de-Thiey is a small commune just 12 km north of Grasse. This area is famous for the copious amount of Bronze Age artifacts that have been located in the area."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.8381, 43.7009]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "La Mure",
+        "desc": "La Mure is a small town just 35 km south of Grenoble on the Plateau Matheysin. La Mure is also home to Le château de Beaumont and various ski resorts. Just west of the village is Lac de Monteynard-Avignonet, a beautiful mountain reservoir."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.784528, 44.906521]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Grenoble",
+        "desc": "Surrounded by dramatic peaks, Grenoble is the capital of Auvergne-Rhône-Alpes. The city is divided into two unequal parts: The older half on the east bank of the river, and the major part of the city on the western bank. Grenoble sits 702 meters above sea level and has a population of 156,653, with nearly 400,000 more people living in the greater metro area. Grenoble is also known for its scientific research facilities and universities, along with being one of the world's most important centers in the advancement of hydroelectric power.\n\nBy the time Napoleon reached Grenoble, Louis XVIII had learned of his escape and sent several regiments of soldiers to arrest him. Instead, the soldiers lowered their weapons and joined him in his march towards Paris."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.724524, 45.188529]
+      }
+    }
+  ]
+}
+
+    const frenchFlagIcon = L.divIcon({
+      html: '<i class="fas fa-flag" style="font-size: 24px; color: #0033cc;"></i>',
+      className: '',
+      iconSize: [24, 24],
+      iconAnchor: [12, 24],
+      popupAnchor: [0, -24]
+    });
+
+    const routePoints = L.geoJSON(geojsonData, {
+      onEachFeature: function (feature, layer) {
+        const name = feature.properties.name;
+        const desc = feature.properties.desc;
+
+        layer.setIcon(frenchFlagIcon);
+        layer.bindTooltip(name);
+        layer.bindPopup(`<strong>${name}</strong><br>${desc}`);
+        layer.on('click', () => layer.openPopup());
+      }
+    }).addTo(map);
+
+    const routeLine = L.geoJSON(data, {
+      filter: feature => feature.geometry.type === "LineString",
+      style: {
+        color: "#000000",
+        weight: 3
+      }
+    }).addTo(map);
+
+    const baseMaps = {
+      "Default": defaultLayer,
+      "Satellite": satelliteLayer,
+      "Terrain": terrainLayer
+    };
+
+    L.control.layers(baseMaps).addTo(map);
+    map.fitBounds(routePoints.getBounds());
+  </script>
+</body>
+</html>
