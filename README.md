@@ -4,10 +4,14 @@ File Structure
 project/
 
 index.html           Main HTML file with embedded JavaScript and CSS
+
 route.js             Contains the GeoJSON LineString for the Route Napoléon
+
 README.md            This file
 
+
 Dependencies
+
 Leaflet 1.0.1
 
 Font Awesome 6.5.0
