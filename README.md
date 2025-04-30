@@ -3,11 +3,11 @@ This map showcases the Route Napoleon, a 325km scenic road throughout the South 
 File Structure 
 project/
 
-index.html           Main HTML file with embedded JavaScript and CSS
+index.html-Main HTML file with embedded JavaScript and CSS
 
-route.js             Contains the GeoJSON LineString for the Route Napoléon
+route.js-Contains the GeoJSON LineString for the Route Napoléon
 
-README.md            This file
+README.md-This file
 
 
 Dependencies
